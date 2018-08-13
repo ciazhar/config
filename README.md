@@ -2,18 +2,17 @@
 
 >Multi Stage JSON Config File Manager for Go
 
-##Running Project
+## Running Project
 ```
 go run main.go <yourJsonConfigFileName>
 ```
 
-##How To Use
-###Init
+## How To Use
 ```golang
 config.Load()
 ```
 
-###Get Field Value
+## Get Field Value
 ```golang
 config.GetString("yourString")
 config.GetInt("yourInteger")
