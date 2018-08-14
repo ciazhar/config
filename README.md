@@ -9,12 +9,11 @@ go run main.go <yourJsonConfigFileName>
 
 ## How To Use
 ```golang
-config.Load()
+	conf :=config.Load()
 ```
 
 ## Get Field Value
 ```golang
-config.GetString("yourString")
-config.GetInt("yourInteger")
-config.GetBool("yourBool")
+conf.Get("port").Float()
+conf.Get("database").Get("name").String()
 ```
