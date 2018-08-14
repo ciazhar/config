@@ -53,13 +53,29 @@ func (c *Config) Get(key string) *Config {
 }
 
 func (c *Config) Float() float64 {
-	return c.data.(float64)
+	if s,ok :=c.data.(float64); ok {
+		return s
+	}
+	fmt.Println("Error Conversion, Field Is Not Float")
+	os.Exit(1)
+	return 0
 }
 
 func (c *Config) String() string {
-	return c.data.(string)
+
+	if s,ok :=c.data.(string); ok {
+		return s
+	}
+	fmt.Println("Error Conversion, Field Is Not String")
+	os.Exit(1)
+	return ""
 }
 
 func (c *Config) Bool() bool {
-	return c.data.(bool)
+	if s,ok :=c.data.(bool); ok {
+		return s
+	}
+	fmt.Println("Error Conversion, Field Is Not Boolean")
+	os.Exit(1)
+	return false
 }
