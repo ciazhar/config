@@ -9,7 +9,7 @@ go run main.go <yourJsonConfigFileName>
 
 ## How To Use
 ```golang
-	conf :=config.Load()
+conf :=config.Load()
 ```
 
 ## Get Field Value
