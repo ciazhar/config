@@ -35,7 +35,7 @@ func Load()	*Config {
 	return &c
 }
 
-func (c *Config) DoMapify() (map[string]interface{}, error) {
+func (c *Config) doMapify() (map[string]interface{}, error) {
 	if m, ok := c.data.(map[string]interface{}); ok {
 		return m, nil
 	}
@@ -43,7 +43,7 @@ func (c *Config) DoMapify() (map[string]interface{}, error) {
 }
 
 func (c *Config) Get(key string) *Config {
-	m, err := c.DoMapify()
+	m, err := c.doMapify()
 	if err == nil {
 		if val, ok := m[key]; ok {
 			return &Config{val}
