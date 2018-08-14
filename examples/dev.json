@@ -1,0 +1,8 @@
+{
+  "database":{
+    "host":"mongodb://username:p455w0rd:27017/mydb",
+    "name":"mydb"
+  },
+  "host":"localhost",
+  "port":9002
+}
