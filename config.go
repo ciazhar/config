@@ -4,10 +4,15 @@ import (
 	"os"
 	"fmt"
 	"encoding/json"
+	"errors"
 )
-var config map[string]interface{}
 
-func Load() {
+type Config struct {
+	data interface{}
+}
+
+func Load()	*Config {
+	var c Config
 
 	if len(os.Args)<=1{
 		fmt.Println("Please Set Config File In Command Line")
@@ -22,35 +27,39 @@ func Load() {
 	defer configFile.Close()
 
 	jsonParser := json.NewDecoder(configFile)
-	err = jsonParser.Decode(&config)
+	err = jsonParser.Decode(&c.data)
+	if err!=nil {
+		fmt.Println("Error Parse Json")
+		os.Exit(1)
+	}
+	return &c
 }
 
-func GetString(s string) string {
-	if config[s]!= nil{
-		return config[s].(string)
-	}else {
-		fmt.Println("field "+s+" not exist")
-		os.Exit(1)
-		return ""
+func (c *Config) DoMapify() (map[string]interface{}, error) {
+	if m, ok := c.data.(map[string]interface{}); ok {
+		return m, nil
 	}
+	return nil, errors.New("can't type assert with map[string]interface{}")
 }
 
-func GetInt(s string) int {
-	if config[s]!= nil {
-		return config[s].(int)
-	}else {
-		fmt.Println("field not exist")
-		os.Exit(1)
-		return 0
+func (c *Config) Get(key string) *Config {
+	m, err := c.DoMapify()
+	if err == nil {
+		if val, ok := m[key]; ok {
+			return &Config{val}
+		}
 	}
+	return &Config{nil}
 }
 
-func GetBool(s string) bool {
-	if config[s]!= nil{
-		return config[s].(bool)
-	}else {
-		fmt.Println("field not exist")
-		os.Exit(1)
-		return false
-	}
+func (c *Config) Float() float64 {
+	return c.data.(float64)
+}
+
+func (c *Config) String() string {
+	return c.data.(string)
+}
+
+func (c *Config) Bool() bool {
+	return c.data.(bool)
 }
