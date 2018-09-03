@@ -38,6 +38,25 @@ func Load()	*Config {
 	return &c
 }
 
+func LoadProfile(profile string) *Config {
+	var c Config
+
+	configFile, err := os.Open(profile+".json")
+	if err!=nil {
+		fmt.Println("Error No Such File In Directory")
+		os.Exit(1)
+	}
+	defer configFile.Close()
+
+	jsonParser := json.NewDecoder(configFile)
+	err = jsonParser.Decode(&c.data)
+	if err!=nil {
+		fmt.Println("Error Parse Json")
+		os.Exit(1)
+	}
+	return &c
+}
+
 func (c *Config) doMapify() (map[string]interface{}, error) {
 	if m, ok := c.data.(map[string]interface{}); ok {
 		return m, nil
