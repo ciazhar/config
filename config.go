@@ -14,12 +14,15 @@ type Config struct {
 func Load()	*Config {
 	var c Config
 
+	var profile string
+
 	if len(os.Args)<=1{
-		fmt.Println("Please Set Config File In Command Line")
-		os.Exit(1)
+		profile = "dev"
+	} else {
+		profile = os.Args[1]
 	}
 
-	configFile, err := os.Open(os.Args[1]+".json")
+	configFile, err := os.Open(profile+"dev.json")
 	if err!=nil {
 		fmt.Println("Error No Such File In Directory")
 		os.Exit(1)
