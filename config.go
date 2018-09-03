@@ -22,7 +22,7 @@ func Load()	*Config {
 		profile = os.Args[1]
 	}
 
-	configFile, err := os.Open(profile+"dev.json")
+	configFile, err := os.Open(profile+".json")
 	if err!=nil {
 		fmt.Println("Error No Such File In Directory")
 		os.Exit(1)
