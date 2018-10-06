@@ -101,3 +101,19 @@ func (c *Config) Bool() bool {
 	os.Exit(1)
 	return false
 }
+
+func GetString(key string) string {
+	c := Load()
+	m, err := c.doMapify()
+	if err == nil {
+		if val, ok := m[key]; ok {
+			c := &Config{val}
+			if s,ok :=c.data.(string); ok {
+				return s
+			}
+			fmt.Println("Error Conversion, Field Is Not String")
+			os.Exit(1)
+		}
+	}
+	return ""
+}
